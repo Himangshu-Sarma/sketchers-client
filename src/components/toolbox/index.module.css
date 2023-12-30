@@ -5,7 +5,7 @@
     background-color: theme('colors.background1');
 
     .toolItem{
-        @apply mb-5;
+        @apply mb-4;
         
         .toolText{
             font-size: 11px;
@@ -18,7 +18,7 @@
             .colorBox{
                 @apply h-5 w-5 mr-1 rounded-sm cursor-pointer;
 
-                &:hover, &.active{
+                &:hover{
                     border: 1.5px solid theme('colors.border2');
                     box-shadow: theme('colors.shadow2');
                 }
