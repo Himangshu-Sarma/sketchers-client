@@ -1,71 +1,96 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./index.module.css";
 
+import { M_ITEMS } from "@/constants";
+import { actionItemClick } from "@/slice/menuSlice";
+
 const Board = () => {
-    const canvasRef = useRef(null);
-    const shouldDraw = useRef(null);
-    const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
-    const {color, size} = useSelector((state) => state.toolbox[activeMenuItem]); 
+    const dispatch = useDispatch();
+  const canvasRef = useRef(null);
+  const shouldDraw = useRef(null);
+  const { activeMenuItem, actionMenuItem } = useSelector((state) => state.menu);
+  const { color, size } = useSelector((state) => state.toolbox[activeMenuItem]);
 
-    useEffect(() => {
-        if(!canvasRef.current)  return;
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
 
-        const changeConfig = () => {
-            context.strokeStyle = color;
-            context.lineWidth = size;
-        }
+    if (actionMenuItem === M_ITEMS.DOWNLOAD) {
+      const URL = canvas.toDataURL();
+      const anchor = document.createElement('a');
+      anchor.href = URL;
+      anchor.download = 'Your Sketch.png';
+      anchor.click();
+      console.log(URL);
+    }
 
-        changeConfig();
-        
-    }, [color, size]);
+    dispatch(actionItemClick(null));
+    console.log("actionMenuItem", actionMenuItem);
+    console.log("activeMenuItem", activeMenuItem);
+  }, [actionMenuItem, dispatch]);
 
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
 
-    // mount side before browser paint
-    useLayoutEffect(() => {
-        if (!canvasRef.current) return;
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
+    const changeConfig = () => {
+      context.strokeStyle = color;
+      context.lineWidth = size;
+    };
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    changeConfig();
+  }, [color, size]);
 
-        const handleMouseDown = (e) => {
-            shouldDraw.current = true;
-            context.beginPath ();
-            context.moveTo(e.clientX, e.clientY);
-        }
+  // mount side before browser paint
+  useLayoutEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
 
-        const handleMouseMove = (e) => {
-            if(!shouldDraw.current)  return;
-            context.lineTo(e.clientX, e.clientY);
-            context.stroke();
-        }
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-        const handleMouseUp = (e) => {
-            shouldDraw.current = false;
-        }
+    const beginPath = (x, y) => {
+      context.beginPath();
+      context.moveTo(x, y);
+    };
 
-        canvas.addEventListener('mousedown', handleMouseDown);
-        canvas.addEventListener('mousemove', handleMouseMove);
-        canvas.addEventListener('mouseup', handleMouseUp);
+    const drawLine = (x, y) => {
+      context.lineTo(x, y);
+      context.stroke();
+    };
 
-        return () => {
-            canvas.removeEventListener('mousedown', handleMouseDown);
-            canvas.removeEventListener('mousemove', handleMouseMove);
-            canvas.removeEventListener('mouseup', handleMouseUp);
-        }
-    }, []);
+    const handleMouseDown = (e) => {
+      shouldDraw.current = true;
+      beginPath(e.clientX, e.clientY);
+    };
 
-    console.log(color, size);
+    const handleMouseMove = (e) => {
+      if (!shouldDraw.current) return;
+      drawLine(e.clientX, e.clientY);
+    };
 
-    return (
-        <canvas ref={canvasRef}>
+    const handleMouseUp = (e) => {
+      shouldDraw.current = false;
+    };
 
-        </canvas>
-    )
-}
+    canvas.addEventListener("mousedown", handleMouseDown);
+    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      canvas.removeEventListener("mousedown", handleMouseDown);
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      canvas.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  console.log(color, size);
+
+  return <canvas ref={canvasRef}></canvas>;
+};
 
 export default Board;
