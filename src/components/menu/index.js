@@ -46,26 +46,23 @@ const Menu = () => {
       >
         <FontAwesomeIcon icon={faEraser} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
-        <FontAwesomeIcon
-          icon={faRotateLeft}
-          className={styles.icon}
-          onClick={() => handleActionItemClick(M_ITEMS.UNDO)}
-        />
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActionItemClick(M_ITEMS.UNDO)}
+      >
+        <FontAwesomeIcon icon={faRotateLeft} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
-        <FontAwesomeIcon
-          icon={faRotateRight}
-          className={styles.icon}
-          onClick={() => handleActionItemClick(M_ITEMS.REDO)}
-        />
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActionItemClick(M_ITEMS.REDO)}
+      >
+        <FontAwesomeIcon icon={faRotateRight} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
-        <FontAwesomeIcon
-          icon={faArrowDown}
-          className={styles.icon}
-          onClick={() => handleActionItemClick(M_ITEMS.DOWNLOAD)}
-        />
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActionItemClick(M_ITEMS.DOWNLOAD)}
+      >
+        <FontAwesomeIcon icon={faArrowDown} className={styles.icon} />
       </div>
     </div>
   );

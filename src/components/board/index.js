@@ -6,9 +6,12 @@ import { M_ITEMS } from "@/constants";
 import { actionItemClick } from "@/slice/menuSlice";
 
 const Board = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const shouldDraw = useRef(null);
+  const drawHistory = useRef([]);
+  const historyPointer = useRef(0);
+
   const { activeMenuItem, actionMenuItem } = useSelector((state) => state.menu);
   const { color, size } = useSelector((state) => state.toolbox[activeMenuItem]);
 
@@ -19,16 +22,30 @@ const Board = () => {
 
     if (actionMenuItem === M_ITEMS.DOWNLOAD) {
       const URL = canvas.toDataURL();
-      const anchor = document.createElement('a');
+      const anchor = document.createElement("a");
       anchor.href = URL;
-      anchor.download = 'Your Sketch.png';
+      anchor.download = "Your Sketch.png";
       anchor.click();
-      console.log(URL);
+    //   console.log(URL);
+    }
+    else if(actionMenuItem === M_ITEMS.UNDO) {
+        if(historyPointer.current > 0){
+            historyPointer.current -= 1;
+        }
+        const imageData = drawHistory.current[historyPointer.current];
+        context.putImageData(imageData, 0, 0);
+    }
+    else if(actionMenuItem === M_ITEMS.REDO) {
+        if(historyPointer.current < drawHistory.current.length -1){
+            historyPointer.current += 1;
+        }
+        const imageData = drawHistory.current[historyPointer.current];
+        context.putImageData(imageData, 0, 0);
     }
 
     dispatch(actionItemClick(null));
-    console.log("actionMenuItem", actionMenuItem);
-    console.log("activeMenuItem", activeMenuItem);
+    // console.log("actionMenuItem", actionMenuItem);
+    // console.log("activeMenuItem", activeMenuItem);
   }, [actionMenuItem, dispatch]);
 
   useEffect(() => {
@@ -75,6 +92,9 @@ const Board = () => {
 
     const handleMouseUp = (e) => {
       shouldDraw.current = false;
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      drawHistory.current.push(imageData);
+      historyPointer.current = drawHistory.current.length - 1;
     };
 
     canvas.addEventListener("mousedown", handleMouseDown);
@@ -88,7 +108,7 @@ const Board = () => {
     };
   }, []);
 
-  console.log(color, size);
+//   console.log(color, size);
 
   return <canvas ref={canvasRef}></canvas>;
 };
