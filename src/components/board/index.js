@@ -56,7 +56,7 @@ const Board = () => {
     changeConfig(color, size);
 
     const handleChangeConfig = (config) => {
-      console.log("config", config);
+      // console.log("config", config);
       changeConfig(config.color, config.size);
     };
     socket.on("changeConfiguration", handleChangeConfig);
