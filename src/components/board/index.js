@@ -1,4 +1,4 @@
-import { M_ITEMS } from "@/constants";
+import { MENU_ITEMS } from "@/constants";
 import { useEffect, useRef, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { actionItemClick, menuItemClick } from "@/slice/menuSlice";
@@ -18,22 +18,22 @@ const Board = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
-    if (actionMenuItem === M_ITEMS.DOWNLOAD) {
+    if (actionMenuItem === MENU_ITEMS.DOWNLOAD) {
       const URL = canvas.toDataURL();
       const anchor = document.createElement("a");
       anchor.href = URL;
       anchor.download = "sketch.jpg";
       anchor.click();
     } else if (
-      actionMenuItem === M_ITEMS.UNDO ||
-      actionMenuItem === M_ITEMS.REDO
+      actionMenuItem === MENU_ITEMS.UNDO ||
+      actionMenuItem === MENU_ITEMS.REDO
     ) {
       //For undo we are always showing the 0th one
-      if (historyPointer.current > 0 && actionMenuItem === M_ITEMS.UNDO)
+      if (historyPointer.current > 0 && actionMenuItem === MENU_ITEMS.UNDO)
         historyPointer.current -= 1;
       if (
         historyPointer.current < drawHistory.current.length - 1 &&
-        actionMenuItem === M_ITEMS.REDO
+        actionMenuItem === MENU_ITEMS.REDO
       )
       historyPointer.current += 1;
       const imageData = drawHistory.current[historyPointer.current];
@@ -59,10 +59,10 @@ const Board = () => {
       // console.log("config", config);
       changeConfig(config.color, config.size);
     };
-    socket.on("changeConfiguration", handleChangeConfig);
+    socket.on("changeConfig", handleChangeConfig);
 
     return () => {
-      socket.off("changeConfiguration", handleChangeConfig);
+      socket.off("changeConfig", handleChangeConfig);
     };
   }, [color, size]);
 

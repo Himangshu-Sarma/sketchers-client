@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import cx from "classnames";
 
-import { M_ITEMS } from "@/constants";
+// import { M_ITEMS } from "@/constants";
+import { MENU_ITEMS } from "@/constants";
 import { menuItemClick, actionItemClick } from "@/slice/menuSlice";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,35 +33,35 @@ const Menu = () => {
     <div className={styles.menuContainer}>
       <div
         className={cx(styles.iconWrapper, {
-          [styles.active]: activeMenuItem === M_ITEMS.PENCIL,
+          [styles.active]: activeMenuItem === MENU_ITEMS.PENCIL,
         })}
-        onClick={() => handleMenuClick(M_ITEMS.PENCIL)}
+        onClick={() => handleMenuClick(MENU_ITEMS.PENCIL)}
       >
         <FontAwesomeIcon icon={faPencil} className={styles.icon} />
       </div>
       <div
         className={cx(styles.iconWrapper, {
-          [styles.active]: activeMenuItem === M_ITEMS.ERASER,
+          [styles.active]: activeMenuItem === MENU_ITEMS.ERASER,
         })}
-        onClick={() => handleMenuClick(M_ITEMS.ERASER)}
+        onClick={() => handleMenuClick(MENU_ITEMS.ERASER)}
       >
         <FontAwesomeIcon icon={faEraser} className={styles.icon} />
       </div>
       <div
         className={styles.iconWrapper}
-        onClick={() => handleActionItemClick(M_ITEMS.UNDO)}
+        onClick={() => handleActionItemClick(MENU_ITEMS.UNDO)}
       >
         <FontAwesomeIcon icon={faRotateLeft} className={styles.icon} />
       </div>
       <div
         className={styles.iconWrapper}
-        onClick={() => handleActionItemClick(M_ITEMS.REDO)}
+        onClick={() => handleActionItemClick(MENU_ITEMS.REDO)}
       >
         <FontAwesomeIcon icon={faRotateRight} className={styles.icon} />
       </div>
       <div
         className={styles.iconWrapper}
-        onClick={() => handleActionItemClick(M_ITEMS.DOWNLOAD)}
+        onClick={() => handleActionItemClick(MENU_ITEMS.DOWNLOAD)}
       >
         <FontAwesomeIcon icon={faArrowDown} className={styles.icon} />
       </div>

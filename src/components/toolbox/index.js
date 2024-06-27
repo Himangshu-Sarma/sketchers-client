@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "@/components/toolbox/index.module.css";
 import cx from "classnames";
 
-import { COLORS, M_ITEMS } from "@/constants";
+import { COLORS, MENU_ITEMS } from "@/constants";
 import { changeColor, changeBrushSize } from "@/slice/toolboxSlice";
 import { socket } from "@/socket";
 
@@ -11,20 +11,20 @@ const Toolbox = () => {
   const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
   const { color, size } = useSelector((state) => state.toolbox[activeMenuItem]);
 
-  const showColor = activeMenuItem === M_ITEMS.PENCIL;
+  const showColor = activeMenuItem === MENU_ITEMS.PENCIL;
   const showStroke =
-    activeMenuItem === M_ITEMS.PENCIL || activeMenuItem === M_ITEMS.ERASER;
+    activeMenuItem === MENU_ITEMS.PENCIL || activeMenuItem === MENU_ITEMS.ERASER;
 
   // const showStrokeTool = activeMenuItem === M_ITEMS.PENCIL
 
   const updateBrushSize = (e) => {
     dispatch(changeBrushSize({ item: activeMenuItem, size: e.target.value }));
-    socket.emit("changeConfiguration", { color, size: e.target.value });
+    socket.emit("changeConfig", { color, size: e.target.value });
   };
 
   const updateColor = (newColor) => {
     dispatch(changeColor({ item: activeMenuItem, color: newColor }));
-    socket.emit("changeConfiguration", { color: newColor, size});
+    socket.emit("changeConfig", { color: newColor, size});
   };
 
   return (
