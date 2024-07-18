@@ -13,6 +13,18 @@ const Board = () => {
   const { activeMenuItem, actionMenuItem } = useSelector((state) => state.menu);
   const { color, size } = useSelector((state) => state.toolbox[activeMenuItem]);
 
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if(canvas) {
+      let context = canvas.getContext("2d");
+      context.globalCompositionOperation = 'destination-over';
+      context.fillStyle = 'white';
+      context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    }
+  }, [])
+  
+
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
