@@ -7,7 +7,7 @@ import Board from "@/components/Board";
 export default function Home() {
   return (
     <>
-      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingTop: '1em', marginInline: '2.5em'}}>
+      <div style={{display: 'flex', flexDirection: 'row', position: 'absolute', justifyContent: 'space-between', marginInline: '2.5em'}}>
         <Logo />
         <UserProfile />
       </div>

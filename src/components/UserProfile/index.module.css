@@ -1,0 +1,14 @@
+.container {
+    @apply flex gap-5 rounded-md pt-5 justify-center items-center text-center;
+}
+
+.button {
+    @apply rounded-md px-2 flex items-center text-center;
+    background-color: rgb(89, 164, 196);
+
+}
+
+.imgUser {
+    @apply w-1/4;
+    align-self: flex-end;
+}
