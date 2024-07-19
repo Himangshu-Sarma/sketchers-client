@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "@/pages/register/index.module.css";
 
-const login = () => {
+const Login = () => {
   const URL =
   process.env.NODE_ENV === "production"
     ? "https://sketchers-server.onrender.com"
@@ -105,4 +105,4 @@ const login = () => {
   );
 };
 
-export default login
+export default Login

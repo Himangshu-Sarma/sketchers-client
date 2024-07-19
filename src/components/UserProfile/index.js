@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "@/components/UserProfile/index.module.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const UserProfile = () => {
   const URL =
@@ -9,9 +10,10 @@ const UserProfile = () => {
     : "http://localhost:8888";
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let token = "undefined";
 
   const handleCheck = async () => {
-    const token = localStorage.getItem("token");
+    token = localStorage.getItem("token") ? localStorage.getItem("token") : "NULL";
     if (token) {
       const logIn = await fetch(
         `${URL}/sketchers/api/auto_login`,
@@ -34,7 +36,7 @@ const UserProfile = () => {
   useEffect(() => {
     handleCheck();
     // console.log(isLoggedIn);
-  }, []);
+  }, [token]);
 
   return (
     <div>
@@ -49,7 +51,7 @@ const UserProfile = () => {
         </div>
       ) : (
         <div className={styles.container}>
-          <img
+          <Image
             className={styles.imgUser}
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwaEfkGCG_-48LMB-z8GcnbePmS-ih_HHMA096X0bEGNcoKd5UE6BZ0v3r1hsLNv3iZ0c&usqp=CAU"
             alt="User"

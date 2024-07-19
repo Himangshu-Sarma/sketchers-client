@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "@/pages/register/index.module.css";
 
-const register = () => {
+const Register = () => {
 
   const URL =
   process.env.NODE_ENV === "production"
@@ -116,4 +116,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
