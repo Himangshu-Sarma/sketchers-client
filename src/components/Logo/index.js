@@ -1,9 +1,15 @@
 import Image from "next/image";
+import logo from "../../../assets/logo.webp";
 
 const Logo = () => {
-    return (
-        <Image src="https://www.shutterstock.com/image-vector/sketchbook-word-drawn-lettering-style-260nw-456718006.jpg" alt="Logo" width="100vw"/>
-    )
-}
+  return (
+    <Image
+      src={logo}
+      alt="Logo"
+      width={100}
+      height={100}
+    />
+  );
+};
 
 export default Logo;

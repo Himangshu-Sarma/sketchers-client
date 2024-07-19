@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "@/components/UserProfile/index.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import User from "../../../assets/User.png";
 
 const UserProfile = () => {
   const URL =
@@ -53,8 +54,10 @@ const UserProfile = () => {
         <div className={styles.container}>
           <Image
             className={styles.imgUser}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwaEfkGCG_-48LMB-z8GcnbePmS-ih_HHMA096X0bEGNcoKd5UE6BZ0v3r1hsLNv3iZ0c&usqp=CAU"
+            src={User}
             alt="User"
+            width={200}
+            height={200}
           />
         </div>
       )}
